@@ -79,7 +79,7 @@ public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ
     }
     return null;
 
-  } */
+  }*/
 
   protected void drawPieces(Graphics g) throws IOException {
     ArrayList<BufferedImage> imgs = new ArrayList<>();
