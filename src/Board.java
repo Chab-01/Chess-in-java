@@ -1,30 +1,54 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 
 public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ RÄTT POSITION
   private int boardSize = 100;
-  private BufferedImage imageOfPieces;
+  private BufferedImage img;
   private ArrayList<Piece> pieces = new ArrayList<>();
 
-
-  protected void addPieces() {
-    Piece wKing = new King(0, 0, true, "king");
-    Piece bKing = new King(5, 5, false, "king");
-
-    pieces.add(wKing);
-    pieces.add(bKing);
+  protected void resetBoard() {
+      pieces.clear();
+      // White pieces
+      pieces.add(new King(4, 0, true, Piece.PieceType.W_KING));
+      pieces.add(new Queen(3, 0, true, Piece.PieceType.W_QUEEN));
+      pieces.add(new Bishop(2, 0, true, Piece.PieceType.W_BISHOP));
+      pieces.add(new Tower(0, 0, true, Piece.PieceType.W_TOWER));
+      pieces.add(new Knight(1, 0, true, Piece.PieceType.W_KNIGHT));
+      pieces.add(new Bishop(5, 0, true, Piece.PieceType.W_BISHOP));
+      pieces.add(new Tower(6, 0, true, Piece.PieceType.W_TOWER));
+      pieces.add(new Knight(7, 0, true, Piece.PieceType.W_KNIGHT));
+      pieces.add(new Pawn(0, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(1, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(2, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(3, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(4, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(5, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(6, 1, true, Piece.PieceType.W_PAWN));
+      pieces.add(new Pawn(7, 1, true, Piece.PieceType.W_PAWN));
+  
+      // Black pieces
+      pieces.add(new King(4, 7, false, Piece.PieceType.B_KING));
+      pieces.add(new Queen(3, 7, false, Piece.PieceType.B_QUEEN));
+      pieces.add(new Bishop(2, 7, false, Piece.PieceType.B_BISHOP));
+      pieces.add(new Tower(0, 7, false, Piece.PieceType.B_TOWER));
+      pieces.add(new Knight(1, 7, false, Piece.PieceType.B_KNIGHT));
+      pieces.add(new Bishop(5, 7, false, Piece.PieceType.B_BISHOP));
+      pieces.add(new Tower(6, 7, false, Piece.PieceType.B_TOWER));
+      pieces.add(new Knight(7, 7, false, Piece.PieceType.B_KNIGHT));
+      pieces.add(new Pawn(0, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(1, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(2, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(3, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(4, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(5, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(6, 6, false, Piece.PieceType.B_PAWN));
+      pieces.add(new Pawn(7, 6, false, Piece.PieceType.B_PAWN)); 
   }
-
-
-
-
 
   public void drawBoard(Graphics g) {
     for (int row = 0; row < 8; row++) {
@@ -43,7 +67,7 @@ public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ
     }
   }
 
-  public int[] getTile(int x, int y) {
+/*   private int[] getTile(int x, int y) {
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
         if (row == x && col == y) {
@@ -55,41 +79,26 @@ public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ
     }
     return null;
 
-  }
+  } */
 
-  public void drawPieces(Graphics g) throws IOException {
-    addPieces();
-    int imageIndex = 0;
-    imageOfPieces = ImageIO.read(new File("img\\pieces.png"));
-    Image imgs[] = new Image[12];
-    int ind = 0;
-    for (int y = 0; y < 400; y += 200) {
-      for (int x = 0; x < 1200; x += 200) {
-        imgs[ind] = imageOfPieces.getSubimage(0, 10, 130, 130).getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH);
-        ind++;
-      }
+  protected void drawPieces(Graphics g) throws IOException {
+    ArrayList<BufferedImage> imgs = new ArrayList<>();
+    String imgPaths[] = {"wking.png", "bking.png", "bbishop.png", "bknight.png", "bpawn.png", "bqueen.png", "btower.png",
+                        "wbishop.png", "wknight.png", "wpawn.png", "wqueen.png", "wtower.png"};
+    for (String imagePath : imgPaths) {
+      img = ImageIO.read(new File("img\\"+imagePath));
+      imgs.add(img);
     }
-
+    
     for (Piece p : pieces) {
-      if (p.getName().equals("king")) {
-          imageIndex = 0;
-      } else if (p.getName().equals("queen")) {
-          imageIndex = 1;
-      } else if (p.getName().equals("bishop")) {
-          imageIndex = 2;
-      } else if (p.getName().equals("horse")) {
-          imageIndex = 3;
-      } else if (p.getName().equals("tower")) {
-          imageIndex = 4;
-      } else if (p.getName().equals("pawn")) {
-          imageIndex = 5;
-      }
-      if (!p.isWhite()) {
-          imageIndex += 6;
-      }
-  
-      g.drawImage(imgs[imageIndex], p.getPiecePositionX() * boardSize, p.getPiecePositionY() * boardSize, null);
-  }
+      int x = p.getPiecePositionX();
+      int y = p.getPiecePositionY();
 
+      Piece.PieceType pieceType = p.getPieceType();
+      int pieceIndex = pieceType.ordinal();
+      BufferedImage pieceImage = imgs.get(pieceIndex);
+
+        g.drawImage(pieceImage, x*boardSize, y*boardSize, boardSize, boardSize, null);      
+    }
   }
 }

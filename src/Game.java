@@ -1,22 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Game {
   public static void main(String[] args) {
     Board board = new Board();
     JFrame frame = new JFrame("Chess");
-
     JPanel panel = new JPanel() {
       @Override
       protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         board.drawBoard(g);
-        try {
-          board.drawPieces(g);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+        board.resetBoard();
+          try {
+            board.drawPieces(g);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        
       }
     };
 

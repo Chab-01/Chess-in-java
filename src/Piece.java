@@ -2,15 +2,20 @@
 public abstract class Piece {
   private int x;
   private int y;
-  private String name;
+  private PieceType type;
   private boolean isWhite = false;
   private boolean isKilled = false;
 
-  public Piece(int x, int y, boolean isWhite, String name) {
+  public enum PieceType {
+    W_KING, B_KING, B_BISHOP, B_KNIGHT, B_PAWN, B_QUEEN, B_TOWER,
+    W_BISHOP, W_KNIGHT, W_PAWN, W_QUEEN, W_TOWER
+  }
+
+  public Piece(int x, int y, boolean isWhite, PieceType type) {
     this.x = x;
     this.y = y;
     this.isWhite = isWhite;
-    this.name = name;
+    this.type = type;
   }
 
   public void setPiece(int x, int y) {
@@ -26,8 +31,8 @@ public abstract class Piece {
     return this.y;
   }
 
-  public String getName() {
-    return this.name;
+  public PieceType getPieceType() {
+    return this.type;
   }
 
   public boolean isKilled() {
