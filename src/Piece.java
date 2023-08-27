@@ -8,7 +8,7 @@ public abstract class Piece {
 
   public enum PieceType {
     W_KING, B_KING, B_BISHOP, B_KNIGHT, B_PAWN, B_QUEEN, B_TOWER,
-    W_BISHOP, W_KNIGHT, W_PAWN, W_QUEEN, W_TOWER
+    W_BISHOP, W_KNIGHT, W_PAWN, W_QUEEN, W_TOWER, 
   }
 
   public Piece(int x, int y, boolean isWhite, PieceType type) {
@@ -18,7 +18,7 @@ public abstract class Piece {
     this.type = type;
   }
 
-  public void setPiece(int x, int y) {
+  public void setPiecePosition(int x, int y) {
     this.x = x;
     this.y = y;
   }
@@ -43,6 +43,6 @@ public abstract class Piece {
     return this.isWhite;
   }
 
-  public abstract void Move(int start, int end);
+  public abstract void move(int start, int end);
 
 }

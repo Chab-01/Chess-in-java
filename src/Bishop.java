@@ -5,9 +5,8 @@ public class Bishop extends Piece{
   }
 
   @Override
-  public void Move(int start, int end) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'Move'");
+  public void move(int start, int end) {
+    setPiecePosition(start, end);
   }
 
 }
