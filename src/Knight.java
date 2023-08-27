@@ -5,9 +5,20 @@ public class Knight extends Piece{
   }
 
   @Override
-  public void move(int start, int end) {
+  public void move(Board board,int endX, int endY) {
+    int startX = getPiecePositionX();
+    int startY = getPiecePositionY();
 
-    setPiecePosition(start, end);
+    int xDiff = Math.abs(endX - startX); 
+    int yDiff = Math.abs(endY - startY);
+
+    if ((xDiff == 2 && yDiff ==1)) {
+      setPiecePosition(endX, endY);
+      board.killPiece(Game.targetedPiece);
+    } else if (xDiff == 1 && yDiff == 2) {
+      setPiecePosition(endX, endY);
+      board.killPiece(Game.targetedPiece);
+    }
   }
 
 }

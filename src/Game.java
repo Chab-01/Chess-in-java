@@ -5,9 +5,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class Game {
-  private static Piece clickedPiece = null;
-  private static int latestX;
-  private static int latestY;
+  protected static Piece clickedPiece = null;
+  protected static Piece targetedPiece = null;
+  protected static int latestX;
+  protected static int latestY;
 
   public static void main(String[] args) {
     Board board = new Board();
@@ -35,12 +36,7 @@ public class Game {
       @Override
       public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-          clickedPiece = board.getPiece(e.getX(), e.getY());
-          if (clickedPiece == null) {
-            return;
-          }
-          latestX = clickedPiece.getPiecePositionX();
-          latestY = clickedPiece.getPiecePositionY();
+          clickedPiece = board.getPiece(e.getX()/board.tileSize, e.getY()/board.tileSize);
         } else {
           System.out.println("USE LEFT MOUSE BUTTON!");
         }
@@ -49,22 +45,24 @@ public class Game {
       @Override
       public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
-          if (clickedPiece == null) {
-            System.out.println("Select a piece to drag");
-          }
-          if (e.getX() / 100 > 7 || e.getY() / 100 > 7) {
-            clickedPiece.setPiecePosition(latestX, latestY);
+          if (e.getX() / board.tileSize > 7 || e.getY() / board.tileSize > 7) {
             System.out.println("OUT OF BOUNDS");
           } else {
             try {
-              clickedPiece.move(e.getX() / 100, e.getY() / 100);
+              targetedPiece = board.getPiece(e.getX() / board.tileSize, e.getY() / board.tileSize);
+              if (targetedPiece == null) {
+                clickedPiece.move(board, e.getX() / board.tileSize, e.getY() / board.tileSize);
+                System.out.println("Clicked piece: " + clickedPiece.getPieceType()); 
+              } else if (targetedPiece.isWhite() != clickedPiece.isWhite()) {
+                clickedPiece.move(board, e.getX() / board.tileSize, e.getY() / board.tileSize);       
+                System.out.println("Clicked piecedadadadadadada: " + clickedPiece.getPieceType());         
+              }
             } catch (NullPointerException error) {
-              
+              System.out.println("Drag a piece!");
             }
           }
-
+          frame.repaint();
         }
-        frame.repaint();
       }
 
       @Override
@@ -80,9 +78,11 @@ public class Game {
 
       @Override
       public void mouseDragged(MouseEvent e) {
-        if (clickedPiece != null) {
-          clickedPiece.setPiecePosition(e.getX(), e.getY());
-          frame.repaint();
+        if (e.getButton() == MouseEvent.BUTTON1) {
+          if (clickedPiece != null) {
+            clickedPiece.setPiecePosition(e.getX(), e.getY());
+            frame.repaint();
+          }
         }
       }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ RÄTT POSITION
-  private int tileSize = 100;
+  protected int tileSize = 100;
   private BufferedImage img;
   protected ArrayList<Piece> pieces = new ArrayList<>();
   private ArrayList<BufferedImage> imgs = new ArrayList<>();
@@ -102,10 +102,14 @@ public class Board { // MÅSTE MULTIPLICERA TILE X OCH Y MED TILESIZE FÖR O FÅ
 
   protected Piece getPiece (int x, int y) {
     for (Piece p : pieces) {
-      if (x/tileSize == p.getPiecePositionX() && y/tileSize == p.getPiecePositionY()) {
+      if (x == p.getPiecePositionX() && y == p.getPiecePositionY()) {
         return p;
       } 
     }
     return null;
+  }
+
+    protected void killPiece (Piece piece) {
+      pieces.remove(piece);
   }
 }

@@ -4,8 +4,7 @@ public abstract class Piece {
   private int y;
   private PieceType type;
   private boolean isWhite = false;
-  private boolean isKilled = false;
-
+  
   public enum PieceType {
     W_KING, B_KING, B_BISHOP, B_KNIGHT, B_PAWN, B_QUEEN, B_TOWER,
     W_BISHOP, W_KNIGHT, W_PAWN, W_QUEEN, W_TOWER, 
@@ -35,14 +34,10 @@ public abstract class Piece {
     return this.type;
   }
 
-  public boolean isKilled() {
-    return this.isKilled;
-  }
-
   public boolean isWhite() {
     return this.isWhite;
   }
 
-  public abstract void move(int start, int end);
+  public abstract void move(Board board, int start, int end);
 
 }
