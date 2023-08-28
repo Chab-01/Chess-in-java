@@ -24,5 +24,4 @@ public class Queen extends Piece{
       board.killPiece(Game.targetedPiece);
     }
   }
-
 }

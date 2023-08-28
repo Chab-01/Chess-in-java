@@ -24,10 +24,12 @@ public class Pawn extends Piece {
         firstMove = true;
       }
     } else {
-      if (xDiff == 0 && yDiff == 1 && endY == startY + yDirection) { // After first move this is how the pawn moves
+      if (xDiff == 0 && yDiff == 1 && endY == startY + yDirection) { // Move one square after first move
         setPiecePosition(endX, endY);
+      } else if (xDiff == 1 && yDiff == 1 && board.getPiece(endX, endY) != null && board.getPiece(endX, endY).isWhite() != isWhite()) { // Kill diagonally if color is not the same
+        setPiecePosition(endX, endY);
+        board.killPiece(Game.targetedPiece);
       }
     }
-
   }
 }
